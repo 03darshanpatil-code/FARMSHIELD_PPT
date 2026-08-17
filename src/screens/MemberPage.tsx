@@ -1,12 +1,16 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import PageLayout from '@/components/PageLayout';
-import { getMemberById, getAdjacentMembers } from '@/data/members';
+import { getMemberById, getAdjacentMembers, members } from '@/data/members';
 import { subsectionTransition, fadeUp, staggerContainer } from '@/lib/motion';
 import Member01Content from '@/screens/members/Member01Content';
 import Member02Content from '@/screens/members/Member02Content';
+import Member03Content from '@/screens/members/Member03Content';
+import Member04Content from '@/screens/members/Member04Content';
+import Member05Content from '@/screens/members/Member05Content';
+import Member06Content from '@/screens/members/Member06Content';
 import MemberPlaceholder from '@/screens/members/MemberPlaceholder';
 
 const accentText = {
@@ -31,11 +35,24 @@ export default function MemberPage() {
   const { id } = useParams<{ id: string }>();
   const memberId = Number(id);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const urlSub = searchParams.get('sub');
   const member = getMemberById(memberId);
 
   const [activeSubId, setActiveSubId] = useState(
-    member?.subsections[0]?.id ?? 'overview',
+    urlSub && member?.subsections.some((s) => s.id === urlSub)
+      ? urlSub
+      : member?.subsections[0]?.id ?? 'overview',
   );
+
+  /* Deep-link support: /member/6?sub=farmer-journey jumps straight to a subsection */
+  useEffect(() => {
+    if (!member || !urlSub) return;
+    if (member.subsections.some((s) => s.id === urlSub)) {
+      setActiveSubId(urlSub);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [member, urlSub]);
 
   if (!member) {
     return (
@@ -59,8 +76,15 @@ export default function MemberPage() {
 
   const adjacent = getAdjacentMembers(memberId);
   const Icon = member.icon;
-  const activeSubsection =
-    member.subsections.find((s) => s.id === activeSubId) ?? member.subsections[0];
+  const isFirstMember = member.memberId === members[0].memberId;
+  const isLastMember = member.memberId === members[members.length - 1].memberId;
+  const lastMemberId = members[members.length - 1].memberId;
+  const prevTarget = isFirstMember ? '/team' : `/member/${adjacent.prev.memberId}`;
+  const prevLabel = isFirstMember ? 'Team Hub' : adjacent.prev.memberName;
+  const nextTarget = isLastMember
+    ? `/member/${lastMemberId}?sub=farmer-journey`
+    : `/member/${adjacent.next.memberId}`;
+  const nextLabel = isLastMember ? 'The Finale' : adjacent.next.memberName;
 
   return (
     <PageLayout navMode="member" memberId={memberId}>
@@ -72,6 +96,15 @@ export default function MemberPage() {
           animate="visible"
           className="max-w-3xl"
         >
+          {/* Presentation label */}
+          <motion.div variants={fadeUp} className="mb-5 flex items-center gap-3">
+            <span className="h-px w-10 bg-gradient-to-r from-emerald-glow/60 to-transparent" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-offwhite-muted/50">
+              Presentation Section · Chapter {member.memberNumber} of{' '}
+              {String(members.length).padStart(2, '0')}
+            </span>
+          </motion.div>
+
           {/* Member number badge */}
           <motion.div variants={fadeUp} className="flex items-center gap-3">
             <span
@@ -150,6 +183,14 @@ export default function MemberPage() {
                 <Member01Content subsectionId={activeSubId} />
               ) : member.memberId === 2 ? (
                 <Member02Content subsectionId={activeSubId} setActiveSubId={setActiveSubId} />
+              ) : member.memberId === 3 ? (
+                <Member03Content subsectionId={activeSubId} setActiveSubId={setActiveSubId} />
+              ) : member.memberId === 4 ? (
+                <Member04Content subsectionId={activeSubId} setActiveSubId={setActiveSubId} />
+              ) : member.memberId === 5 ? (
+                <Member05Content subsectionId={activeSubId} setActiveSubId={setActiveSubId} />
+              ) : member.memberId === 6 ? (
+                <Member06Content subsectionId={activeSubId} setActiveSubId={setActiveSubId} />
               ) : (
                 <MemberPlaceholder memberName={member.memberName} title={member.title} />
               )}
@@ -160,7 +201,7 @@ export default function MemberPage() {
         {/* Footer nav: Prev / Next */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
           <button
-            onClick={() => navigate(`/member/${adjacent.prev.memberId}`)}
+            onClick={() => navigate(prevTarget)}
             className="group flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3 text-left transition-all hover:border-emerald-glow/30 hover:bg-emerald-glow/[0.04]"
           >
             <ArrowLeft className="h-4 w-4 text-offwhite-muted transition-transform group-hover:-translate-x-1" />
@@ -168,9 +209,7 @@ export default function MemberPage() {
               <p className="text-xs uppercase tracking-widest text-offwhite-muted/60">
                 Previous
               </p>
-              <p className="text-sm font-medium text-offwhite">
-                {adjacent.prev.memberName}
-              </p>
+              <p className="text-sm font-medium text-offwhite">{prevLabel}</p>
             </div>
           </button>
 
@@ -182,16 +221,14 @@ export default function MemberPage() {
           </button>
 
           <button
-            onClick={() => navigate(`/member/${adjacent.next.memberId}`)}
+            onClick={() => navigate(nextTarget)}
             className="group flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3 text-right transition-all hover:border-emerald-glow/30 hover:bg-emerald-glow/[0.04]"
           >
             <div>
               <p className="text-xs uppercase tracking-widest text-offwhite-muted/60">
                 Next
               </p>
-              <p className="text-sm font-medium text-offwhite">
-                {adjacent.next.memberName}
-              </p>
+              <p className="text-sm font-medium text-offwhite">{nextLabel}</p>
             </div>
             <ArrowRight className="h-4 w-4 text-offwhite-muted transition-transform group-hover:translate-x-1" />
           </button>

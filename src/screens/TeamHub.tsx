@@ -114,8 +114,13 @@ function MemberCard({ member, onClick }: MemberCardProps) {
         </span>
       </div>
 
+      {/* Member label */}
+      <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.25em] text-offwhite-muted/50">
+        Member {member.memberNumber}
+      </p>
+
       {/* Name */}
-      <h3 className="mt-6 font-display text-xl font-semibold text-offwhite">
+      <h3 className="mt-1.5 font-display text-xl font-semibold text-offwhite">
         {member.memberName}
       </h3>
 

@@ -12,7 +12,6 @@ import {
   Activity,
   ArrowRight,
   Package,
-  MapPin,
   ShoppingCart,
   Info,
   ShieldCheck,

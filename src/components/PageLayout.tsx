@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 import NavBar from './NavBar';
@@ -17,6 +18,11 @@ export default function PageLayout({
   memberId,
   className = '',
 }: PageLayoutProps) {
+  /* Reset scroll position on every page transition so members always open at the top */
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, []);
+
   return (
     <div className="relative min-h-screen atmospheric-bg">
       {/* Subtle grid overlay */}

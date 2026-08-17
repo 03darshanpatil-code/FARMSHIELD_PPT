@@ -6,6 +6,15 @@ import {
   Satellite,
   Handshake,
   Bot,
+  Network,
+  CloudSun,
+  Layers,
+  Landmark,
+  ScanLine,
+  Newspaper,
+  Languages,
+  TrendingUp,
+  Sprout,
 } from 'lucide-react';
 
 export type SubsectionId = string;
@@ -73,7 +82,8 @@ export const members: Member[] = [
     icon: LineChart,
     accent: 'amber',
     subsections: [
-      { id: 'overview', number: '01', title: 'Overview', icon: LineChart },
+      { id: 'market-forecasting', number: '01', title: 'Market Price Forecasting', icon: LineChart },
+      { id: 'krishi-setu', number: '02', title: 'Krishi Setu', icon: Network },
     ],
   },
   {
@@ -86,7 +96,8 @@ export const members: Member[] = [
     icon: Satellite,
     accent: 'emerald',
     subsections: [
-      { id: 'overview', number: '01', title: 'Overview', icon: Satellite },
+      { id: 'weather', number: '01', title: 'Weather Intelligence', icon: CloudSun },
+      { id: 'soil', number: '02', title: 'Soil Intelligence', icon: Layers },
     ],
   },
   {
@@ -99,20 +110,26 @@ export const members: Member[] = [
     icon: Handshake,
     accent: 'lime',
     subsections: [
-      { id: 'overview', number: '01', title: 'Overview', icon: Handshake },
+      { id: 'schemes', number: '01', title: 'Government Schemes', icon: Landmark },
+      { id: 'harvestid', number: '02', title: 'HarvestID', icon: ScanLine },
     ],
   },
   {
     memberId: 6,
     memberNumber: '06',
     memberName: 'Moiz Y. E.',
-    title: 'AI Assistant, Technology & Impact',
-    subtitle: 'Conversational AI assistance, technology architecture, and measurable impact.',
+    title: 'AI Assistant & Impact',
+    subtitle: 'Kisan Times, Plant Doctor AI in 13 languages, and the impact of the unified FarmShield ecosystem.',
     descriptor: 'AI Assistant & Impact',
     icon: Bot,
     accent: 'amber',
     subsections: [
-      { id: 'overview', number: '01', title: 'Overview', icon: Bot },
+      { id: 'kisan-times', number: '01', title: 'Kisan Times', icon: Newspaper },
+      { id: 'plant-doctor', number: '02', title: 'Plant Doctor AI', icon: Bot },
+      { id: 'multilingual', number: '03', title: 'Multilingual AI', icon: Languages },
+      { id: 'impact', number: '04', title: 'FarmShield Impact', icon: TrendingUp },
+      { id: 'unified-ecosystem', number: '05', title: 'Unified Ecosystem', icon: Network },
+      { id: 'farmer-journey', number: '06', title: 'Farmer Journey', icon: Sprout },
     ],
   },
 ];

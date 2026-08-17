@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, Users, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
-import { getAdjacentMembers, getMemberById } from '@/data/members';
+import { getAdjacentMembers, getMemberById, members } from '@/data/members';
 
 type NavMode = 'home' | 'team' | 'member';
 
@@ -16,6 +16,8 @@ export default function NavBar({ mode, memberId }: NavBarProps) {
 
   const adjacent = memberId ? getAdjacentMembers(memberId) : null;
   const currentMember = memberId ? getMemberById(memberId) : null;
+  const isFirstMember = memberId === members[0].memberId;
+  const isLastMember = memberId === members[members.length - 1].memberId;
 
   const isHome = mode === 'home';
   const isTeam = mode === 'team';
@@ -89,19 +91,27 @@ export default function NavBar({ mode, memberId }: NavBarProps) {
               <>
                 <div className="mx-1 hidden h-6 w-px bg-white/10 sm:block" />
                 <button
-                  onClick={() => navigate(`/member/${adjacent.prev.memberId}`)}
+                  onClick={() =>
+                    isFirstMember
+                      ? navigate('/team')
+                      : navigate(`/member/${adjacent.prev.memberId}`)
+                  }
                   className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-offwhite-muted transition-all hover:border-emerald-glow/40 hover:bg-emerald-glow/10 hover:text-emerald-glow"
-                  aria-label={`Previous: ${adjacent.prev.memberName}`}
+                  aria-label={isFirstMember ? 'Back to Team' : `Previous: ${adjacent.prev.memberName}`}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                  <span className="hidden sm:inline">Prev</span>
+                  <span className="hidden sm:inline">{isFirstMember ? 'Team' : 'Prev'}</span>
                 </button>
                 <button
-                  onClick={() => navigate(`/member/${adjacent.next.memberId}`)}
+                  onClick={() =>
+                    isLastMember
+                      ? navigate(`/member/${members[members.length - 1].memberId}?sub=farmer-journey`)
+                      : navigate(`/member/${adjacent.next.memberId}`)
+                  }
                   className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-offwhite-muted transition-all hover:border-emerald-glow/40 hover:bg-emerald-glow/10 hover:text-emerald-glow"
-                  aria-label={`Next: ${adjacent.next.memberName}`}
+                  aria-label={isLastMember ? 'Final experience' : `Next: ${adjacent.next.memberName}`}
                 >
-                  <span className="hidden sm:inline">Next</span>
+                  <span className="hidden sm:inline">{isLastMember ? 'Finale' : 'Next'}</span>
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </>

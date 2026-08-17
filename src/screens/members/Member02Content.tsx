@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { BrainCircuit, ShoppingCart, FlaskConical } from 'lucide-react';
 import { fadeUp, staggerContainer } from '@/lib/motion';
 import DiseaseDetection from './disease-detection/DiseaseDetection';
 import FertilizerMarketplace from './fertilizer/FertilizerMarketplace';
@@ -43,9 +42,3 @@ export default function Member02Content({
     </motion.div>
   );
 }
-
-export const featureIcons = {
-  detection: BrainCircuit,
-  marketplace: ShoppingCart,
-  simulator: FlaskConical,
-};

@@ -17,7 +17,7 @@ import {
   Wheat,
   type LucideIcon,
 } from 'lucide-react';
-import { fadeUp, scaleIn, staggerContainer } from '@/lib/motion';
+import { fadeUp, staggerContainer } from '@/lib/motion';
 
 type CropId = 'tomato' | 'wheat' | 'rice' | 'cotton';
 type Condition = 'optimal' | 'moderate' | 'poor';
