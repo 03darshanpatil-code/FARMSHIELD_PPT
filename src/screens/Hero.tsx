@@ -79,6 +79,18 @@ export default function Hero() {
           Smart Farming Begins with Smart Decisions
         </motion.p>
 
+        {/* Team name */}
+        <motion.div
+          variants={fadeUp}
+          className="mt-5 flex items-center justify-center gap-4"
+        >
+          <span className="h-px w-12 bg-gradient-to-r from-transparent to-emerald-glow/40" />
+          <span className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-glow/90">
+            ERROR 420
+          </span>
+          <span className="h-px w-12 bg-gradient-to-l from-transparent to-emerald-glow/40" />
+        </motion.div>
+
         {/* Supporting text */}
         <motion.p
           variants={fadeUp}

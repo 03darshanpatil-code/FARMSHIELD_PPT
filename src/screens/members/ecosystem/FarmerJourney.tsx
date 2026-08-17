@@ -156,6 +156,21 @@ export default function FarmerJourney() {
           SMART FARMING BEGINS WITH SMART DECISIONS.
         </motion.p>
 
+        {/* Team signature */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative mt-4 flex items-center justify-center gap-4"
+        >
+          <span className="h-px w-12 bg-gradient-to-r from-transparent to-emerald-glow/40" />
+          <span className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-glow/90">
+            ERROR 420
+          </span>
+          <span className="h-px w-12 bg-gradient-to-l from-transparent to-emerald-glow/40" />
+        </motion.div>
+
         <motion.p
           variants={fadeUp}
           initial="hidden"
@@ -163,7 +178,7 @@ export default function FarmerJourney() {
           viewport={{ once: true }}
           className="relative mx-auto mt-4 max-w-xl text-base leading-relaxed text-offwhite-muted"
         >
-          One intelligent ecosystem for a stronger agricultural future.
+          One intelligent agricultural ecosystem.
         </motion.p>
 
         <motion.div

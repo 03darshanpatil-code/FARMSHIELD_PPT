@@ -57,9 +57,17 @@ export default function TeamHub() {
             <span className="text-gradient-emerald">MEET THE FARM SHIELD TEAM</span>
           </motion.h1>
 
+          {/* Team name */}
           <motion.p
             variants={fadeUp}
-            className="mx-auto mt-6 max-w-2xl text-lg text-offwhite-muted"
+            className="mt-4 text-xs font-bold uppercase tracking-[0.4em] text-emerald-glow/90"
+          >
+            ERROR 420
+          </motion.p>
+
+          <motion.p
+            variants={fadeUp}
+            className="mx-auto mt-5 max-w-2xl text-lg text-offwhite-muted"
           >
             Six minds. One vision. One intelligent agricultural ecosystem.
           </motion.p>
